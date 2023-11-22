@@ -6,13 +6,14 @@ import AppMenu from './components/Menu';
 import { useDispatch } from 'react-redux';
 import { setTasks } from './redux/taskSlice';
 import { useStore } from 'react-redux';
+import TaskUpdatePage from './pages/TaskUpdatePage';
 
 function App() {
   const dispatch = useDispatch();
   const store = useStore();
 
   useEffect(() => {
-    // Sayfa yüklendiğinde localStorage'dan veriyi çek ve Redux store'u güncelle
+    // Sayfa yüklendiğinde localStorage'dan veriyi çek ve Redux store'u güncelle //
     const storedTasks = localStorage.getItem('tasks');
     if (storedTasks) {
       dispatch(setTasks(JSON.parse(storedTasks)));
@@ -20,7 +21,7 @@ function App() {
   }, [dispatch]);
 
   useEffect(() => {
-    // Redux store güncellendiğinde localStorage'a yaz
+    // Redux store güncellendiğinde localStorage'a yaz //
     const unsubscribe = store.subscribe(() => {
       const state = store.getState();
       localStorage.setItem('tasks', JSON.stringify(state.tasks));
@@ -37,6 +38,7 @@ function App() {
         <Route path="/" element={<TaskListPage />} /> 
         <Route path="/liste" element={<TaskListPage />} />
         <Route path="/task-ekle" element={<AddTaskPage />} />
+        <Route path="/task-guncelle/:id" element={<TaskUpdatePage />} />
       </Routes>
     </Router>
   );
