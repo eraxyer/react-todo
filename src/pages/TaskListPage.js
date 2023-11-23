@@ -11,14 +11,18 @@ const TaskListPage = () => {
   const tasks = useSelector(state => state.tasks);
 
   useEffect(() => {
-    axios.get('https://jsonplaceholder.typicode.com/todos')
-      .then(response => {
-        dispatch(setTasks(response.data));
-      })
-      .catch(error => {
-        console.error('Error task', error);
-      });
-  }, [dispatch]);
+    // Redux store boşsa JSONPlaceholder'dan veriyi çek //
+    if (tasks.length === 0) {
+      axios.get('https://jsonplaceholder.typicode.com/todos')
+        .then(response => {
+          dispatch(setTasks(response.data));
+          console.log(response)
+        })
+        .catch(error => {
+          console.error('Error task', error);
+        });
+    }
+  }, [dispatch, tasks]);
 
   const handleCheckboxChange = (taskId) => {
     dispatch(toggleTask({ id: taskId }));

@@ -11,9 +11,7 @@ const tasksSlice = createSlice({
   initialState: getStoredTasks(), // localStorage'dan veriyi aldık //
   reducers: {
     setTasks: (state, action) => {
-  // JSON'dan gelen yeni veri ile Redux store'u güncelleme //
-    state = [...action.payload]; // state'e yeni bir referans ataması yaparak güncelleme
-    localStorage.setItem('tasks', JSON.stringify(state)); // güncellenmiş veriyi localStorage'a kaydet
+      return action.payload;
     },
     addTask: (state, action) => {
       const newTask = {
